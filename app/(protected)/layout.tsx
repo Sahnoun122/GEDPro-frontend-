@@ -1,0 +1,1 @@
+// Layout pour les pages protégées

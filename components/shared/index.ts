@@ -1,0 +1,1 @@
+// Composants génériques partagés
