@@ -23,3 +23,19 @@ export async function regester(data: {
         return res.json();
 }
 
+export async function login(data : {email : string , password : string }) {
+    const res = await fetch(`${URL_API}/login`, {
+        method : "POST",
+        headers : {"Content-Type" : "application/json"},
+        body : JSON.stringify(data)    });
+
+        if(!res.ok){
+            const errore = await res.json();
+            throw new Error(errore.message || "login pas bien ");
+        
+        }
+
+        return res.json();
+    
+}
+
