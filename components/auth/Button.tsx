@@ -4,7 +4,7 @@ import React from "react"
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>{
 }
 
-export default function button({ children , ...props }: ButtonProps) {
+export default function Button({ children , ...props }: ButtonProps) {
   return (
     <div>
       <button

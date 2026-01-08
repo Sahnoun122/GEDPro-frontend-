@@ -4,8 +4,7 @@ import { FormEvent , useState } from "react";
 import { useRouter } from "next/router";
 import { regester } from "@/services/auth.service";
 import Input from "@/components/auth/Input";
-import button from "@/components/auth/Button";
-
+import Button from "@/components/auth/Button";
 export default function Register(){
 
     const route = useRouter();
@@ -31,17 +30,15 @@ export default function Register(){
 
 
     return (
-      <form onSubmit={handleSubmit}>
-        <Input label="firstname" name="firstname" type="text" required />
-        <Input label="lasttname" name="lasttname" type="text" required />
-        <Input label="email" name="email" type="email" required />
-        <Input label="password" name="password" type="password" required />
-        <Input
-          label="organisation_name"
-          name="organisation_name"
-          type="password"
-          required
-        />
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-4 w-96 mx-auto mt-20"
+      >
+        {error && <p className="text-red-500">{error}</p>}
+        <Input label="Nom" name="name" type="text" required />
+        <Input label="Email" name="email" type="email" required />
+        <Input label="Mot de passe" name="password" type="password" required />
+        <Button type="submit">S'inscrire</Button>
       </form>
     );
 }
