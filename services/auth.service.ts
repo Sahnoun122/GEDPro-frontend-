@@ -1,6 +1,6 @@
 import { json } from "stream/consumers";
 
-const URL_API = "http://localhost/3000";
+const URL_API = "http://localhost:3001";
 
 export async function regester(data: {
   firstname: string;
@@ -10,10 +10,11 @@ export async function regester(data: {
   organisation_name: string;
 }) {
 
-    const res = await fetch(`${URL_API}/register`,{
-        method : "POST",
-        headers : {"Content-Type" : "application/json"},
-        body : JSON.stringify(data)    });
+    const res = await fetch(`${URL_API}/auth/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
 
         if(!res.ok){
             const errore = await res.json();
@@ -24,7 +25,7 @@ export async function regester(data: {
 }
 
 export async function login(data : {email : string , password : string }) {
-    const res = await fetch(`${URL_API}/login`, {
+    const res = await fetch(`${URL_API}/auth/login`, {
         method : "POST",
         headers : {"Content-Type" : "application/json"},
         body : JSON.stringify(data)    });

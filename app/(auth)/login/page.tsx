@@ -3,7 +3,7 @@ import { FormEvent , useState } from "react";
 import { login } from "@/services/auth.service";
 import Input from "@/components/auth/Input";
 import Button from "@/components/auth/Button";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function Login(){
     const route = useRouter();
@@ -17,8 +17,8 @@ export default function Login(){
   const password = formData.get("password") as string;
 
   try {
-   const {token} = await login({email , password});
-    localStorage.setItem("token" , token)
+   const {access_token} = await login({email , password});
+    localStorage.setItem("token" , access_token)
      route.push('/dashboard')
   } catch (err :any) {
     setErorre(err.message)
