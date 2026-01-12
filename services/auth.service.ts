@@ -1,42 +1,43 @@
-import { json } from "stream/consumers";
 
-const URL_API = "http://localhost:3001";
 
-export async function regester(data: {
+import { http } from "./http.service";
+import { User } from "@/types/user";
+
+
+export async function login(data: { email: string; password: string }) {
+  return http<{ access_token: string }>("/auth/login", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+export async function createUser(data: {
   firstname: string;
   lastname: string;
   email: string;
   password: string;
-  organisation_name: string;
+  role: "admin_rh" | "rh" | "manager";
 }) {
-
-    const res = await fetch(`${URL_API}/auth/register`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-
-        if(!res.ok){
-            const errore = await res.json();
-             throw new Error(errore.message || "register pas bien")
-        }
-  
-        return res.json();
+  return http("/users", {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
 }
 
-export async function login(data : {email : string , password : string }) {
-    const res = await fetch(`${URL_API}/auth/login`, {
-        method : "POST",
-        headers : {"Content-Type" : "application/json"},
-        body : JSON.stringify(data)    });
 
-        if(!res.ok){
-            const errore = await res.json();
-            throw new Error(errore.message || "login pas bien ");
-        
-        }
+export async function getUsers(): Promise<User[]> {
+  return http<User[]>("/users"); 
+}
 
-        return res.json();
-    
+export async function deleteUser(id: string) {
+  return http(`/users/${id}`, { method: "DELETE" });
+}
+
+
+export async function updateUser(id: string, data: any) {
+  return http(`/users/${id}`, {
+    method: "PUT",
+    body: JSON.stringify(data),
+  });
 }
 

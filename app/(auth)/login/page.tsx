@@ -1,41 +1,54 @@
-"use client"
-import { FormEvent , useState } from "react";
+"use client";
+
+import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 import { login } from "@/services/auth.service";
+
+import { decodeToken } from "@/utils/helpers";
+import { useAuthStore } from "@/stores/auth.store";
 import Input from "@/components/auth/Input";
 import Button from "@/components/auth/Button";
-import { useRouter } from "next/navigation";
 
-export default function Login(){
-    const route = useRouter();
+export default function LoginPage() {
+  const router = useRouter();
+  const { login: saveAuth } = useAuthStore();
+  const [error, setError] = useState("");
 
-    const [error , setErorre]= useState("");
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
 
-     async function handleSubmit(e: FormEvent<HTMLFormElement>){
-        e.preventDefault()
-  const formData = new FormData(e.currentTarget);
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
+    try {
+      const { access_token } = await login({
+        email: formData.get("email") as string,
+        password: formData.get("password") as string,
+      });
 
-  try {
-   const {access_token} = await login({email , password});
-    localStorage.setItem("token" , access_token)
-     route.push('/dashboard')
-  } catch (err :any) {
-    setErorre(err.message)
+      const decoded = decodeToken(access_token);
+
+      saveAuth(access_token, {
+        id: decoded.sub,
+        firstname: decoded.firstname || '',
+        lastname: decoded.lastname || '',
+        email: decoded.email || '',
+        role: decoded.role,
+        organisation_id: decoded.organisation_id,
+      });
+
+      if (decoded.role === "admin_rh") router.push("/dashboard");
+      else if (decoded.role === "rh") router.push("/candidats");
+      else router.push("/entretiens");
+    } catch (err: any) {
+      setError(err.message);
+    }
   }
 
-    }
-
-
-    return (
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-4 w-96 mx-auto mt-20"
-      >
-        {error && <p className="text-red-500">{error}</p>}
-        <Input label="Email" name="email" type="email" required />
-        <Input label="Mot de passe" name="password" type="password" required />
-        <Button type="submit">Se connecter</Button>
-      </form>
-    );
+  return (
+    <form onSubmit={handleSubmit} className="w-96 mx-auto mt-20 space-y-4">
+      {error && <p className="text-red-500">{error}</p>}
+      <Input label="Email" name="email" />
+      <Input label="Mot de passe" name="password" type="password" />
+      <Button type="submit">Connexion</Button>
+    </form>
+  );
 }
