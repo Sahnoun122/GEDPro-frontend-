@@ -14,9 +14,7 @@ export default function DashboardPage() {
 
   return (
     <div className="w-full">
-      <div className="w-full bg-red-500 text-white p-4 text-center text-xl font-bold">
-        🔥 NAVBAR TEST - Si vous voyez ceci, le code fonctionne ! 🔥
-      </div>
+   
       
       <nav className="w-full bg-blue-600 text-white shadow-lg">
         <div className="w-full px-4">
@@ -65,13 +63,10 @@ export default function DashboardPage() {
       </nav>
 
       <div className="p-4">
-        <div className="bg-green-500 text-white p-4 rounded mb-4">
-          ✅ TEST RÉUSSI - La navbar devrait être visible au-dessus !
-        </div>
+      
         <h1 className="text-2xl font-bold">Dashboard Admin RH</h1>
         <p>Ici vous pouvez gérer les utilisateurs</p>
         <h1>khadija shanoun</h1>
-        <h1>fhiefhjcnvn vjie</h1>
       </div>
     </div>
   );

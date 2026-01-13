@@ -56,67 +56,127 @@ Le projet est structuré de manière modulaire afin de garantir :
 ## 5. Structure des dossiers
 
 ```
-/src
-│
-├── app/                      # Routes Next.js (App Router)
-│   ├── (auth)/               # Pages publiques (login)
-│   │   └── login/
-│   │
-│   ├── (protected)/          # Pages protégées par authentification
-│   │   ├── dashboard/
-│   │   ├── candidats/
-│   │   ├── documents/
-│   │   ├── entretiens/
-│   │   ├── formulaires/
-│   │   └── utilisateurs/
-│   │
-│   ├── jobs/                 # Offres d’emploi (SSR)
-│   │   └── [slug]/
-│   │
-│   └── layout.tsx            # Layout principal
-│
-├── components/               # Composants réutilisables
-│   ├── ui/                   # Boutons, modals, inputs
-│   ├── layout/               # Header, Sidebar, Footer
-│   ├── auth/                 # Composants liés à l’authentification
-│   └── shared/               # Composants génériques
-│
-├── features/                 # Logique métier par domaine
-│   ├── auth/
-│   ├── candidats/
-│   ├── documents/
-│   ├── entretiens/
-│   └── formulaires/
-│
-├── services/                 # Communication avec l’API backend
-│   ├── api.ts
-│   ├── auth.service.ts
-│   └── http.service.ts
-│
-├── stores/                   # State management global
-│   ├── auth.store.ts
-│   └── ui.store.ts
-│
-├── middlewares/              # Middlewares de sécurité
-│   └── auth.middleware.ts
-│
-├── hooks/                    # Hooks personnalisés
-│   ├── useAuth.ts
-│   ├── useRole.ts
-│   └── usePermissions.ts
-│
-├── utils/                    # Fonctions utilitaires
-│   ├── permissions.ts
-│   ├── constants.ts
-│   └── helpers.ts
-│
-├── types/                    # Types TypeScript
-│   ├── user.ts
-│   ├── role.ts
-│   └── organisation.ts
-│
-└── styles/                   # Styles globaux
-    └── globals.css
+   src/
+   │
+   ├── app/
+   │   ├── (auth)/
+   │   │   └── login/
+   │   │       └── page.tsx
+   │   │
+   │   ├── (protected)/
+   │   │   ├── dashboard/
+   │   │   │   └── page.tsx
+   │   │   │
+   │   │   ├── candidats/
+   │   │   │   ├── page.tsx
+   │   │   │   └── [id]/
+   │   │   │       └── page.tsx
+   │   │   │
+   │   │   ├── documents/
+   │   │   │   └── page.tsx
+   │   │   │
+   │   │   ├── entretiens/
+   │   │   │   └── page.tsx
+   │   │   │
+   │   │   ├── formulaires/
+   │   │   │   ├── page.tsx
+   │   │   │   ├── create/
+   │   │   │   │   └── page.tsx
+   │   │   │   ├── [formId]/
+   │   │   │   │   ├── page.tsx
+   │   │   │   │   └── builder/
+   │   │   │   │       └── page.tsx
+   │   │   │
+   │   │   └── utilisateurs/
+   │   │       └── page.tsx
+   │   │
+   │   ├── jobs/
+   │   │   ├── page.tsx
+   │   │   └── [slug]/
+   │   │       └── page.tsx
+   │   │
+   │   ├── layout.tsx
+   │   └── globals.css
+   │
+   ├── components/
+   │   ├── ui/
+   │   │   ├── Button.tsx
+   │   │   ├── Input.tsx
+   │   │   ├── Select.tsx
+   │   │   ├── Modal.tsx
+   │   │   └── Table.tsx
+   │   │
+   │   ├── layout/
+   │   │   ├── Header.tsx
+   │   │   ├── Sidebar.tsx
+   │   │   └── Footer.tsx
+   │   │
+   │   ├── auth/
+   │   │   └── LoginForm.tsx
+   │   │
+   │   └── shared/
+   │       └── EmptyState.tsx
+   │
+   ├── features/
+   │   ├── auth/
+   │   │   ├── api.ts
+   │   │   ├── hooks.ts
+   │   │   └── types.ts
+   │   │
+   │   ├── candidats/
+   │   │   ├── api.ts
+   │   │   ├── components/
+   │   │   └── types.ts
+   │   │
+   │   ├── documents/
+   │   │   ├── api.ts
+   │   │   └── types.ts
+   │   │
+   │   ├── entretiens/
+   │   │   ├── api.ts
+   │   │   └── types.ts
+   │   │
+   │   └── formulaires/
+   │       ├── api.ts
+   │       ├── components/
+   │       │   ├── FormRenderer.tsx
+   │       │   ├── FieldRenderer.tsx
+   │       │   ├── FormBuilder.tsx
+   │       │   ├── FieldEditor.tsx
+   │       │   └── FormPreview.tsx
+   │       ├── hooks.ts
+   │       ├── types.ts
+   │       └── utils.ts
+   │
+   ├── services/
+   │   ├── http.service.ts
+   │   └── api.ts
+   │
+   ├── stores/
+   │   ├── auth.store.ts
+   │   └── ui.store.ts
+   │
+   ├── middlewares/
+   │   └── auth.middleware.ts
+   │
+   ├── hooks/
+   │   ├── useAuth.ts
+   │   ├── useRole.ts
+   │   └── usePermissions.ts
+   │
+   ├── utils/
+   │   ├── permissions.ts
+   │   ├── constants.ts
+   │   └── helpers.ts
+   │
+   ├── types/
+   │   ├── user.ts
+   │   ├── role.ts
+   │   └── organisation.ts
+   │
+   └── styles/
+      └── globals.css
+
 ```
 
 ---
