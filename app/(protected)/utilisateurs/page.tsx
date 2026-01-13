@@ -149,7 +149,6 @@ async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
             required
           >
             <option value="">Choisir un rôle</option>
-            <option value="admin_rh">Admin RH</option>
             <option value="rh">RH</option>
             <option value="manager">Manager</option>
           </select>

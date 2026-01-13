@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useAuthStore } from '@/stores/auth.store';
 
 export default function ProtectedLayout({
@@ -39,32 +40,7 @@ export default function ProtectedLayout({
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <header className="bg-white shadow border-b border-gray-200">
-        <div className="px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <h2 className="text-lg font-semibold text-gray-900">
-                GEDPro-RH - Administration
-              </h2>
-            </div>
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-gray-600">
-                Bonjour {user?.firstname} {user?.lastname}
-              </span>
-              <button 
-                onClick={() => {
-                  useAuthStore.getState().logout();
-                  router.push('/login');
-                }}
-                className="text-sm text-red-600 hover:text-red-800"
-              >
-                Déconnexion
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-      <main className="p-6">
+      <main className="min-h-screen">
         {children}
       </main>
     </div>

@@ -16,7 +16,7 @@ export async function createUser(data: {
   lastname: string;
   email: string;
   password: string;
-  role: "admin_rh" | "rh" | "manager";
+  role: "rh" | "manager"; // Seulement rh et manager autorisés
 }) {
   return http("/users", {
     method: "POST",
