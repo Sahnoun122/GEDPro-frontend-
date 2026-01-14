@@ -14,29 +14,36 @@ export default function DashboardPage() {
 
   return (
     <div className="w-full">
-   
-      
       <nav className="w-full bg-blue-600 text-white shadow-lg">
         <div className="w-full px-4">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-8">
-              <h1 className="text-xl font-bold text-yellow-300">🏠 GEDPro-RH Admin</h1>
-              
+              <h1 className="text-xl font-bold text-yellow-300">
+                🏠 GEDPro-RH Admin
+              </h1>
+
               <div className="flex space-x-4">
-                <Link 
-                  href="/dashboard" 
+                <Link
+                  href="/dashboard"
                   className="bg-blue-700 px-4 py-2 rounded-md transition-colors text-sm font-bold border-2 border-yellow-400"
                 >
                   📊 Dashboard
                 </Link>
-                <Link 
-                  href="/utilisateurs" 
+
+                <Link
+                  href="/formulaires"
+                  className="hover:bg-blue-700 px-4 py-2 rounded-md transition-colors text-sm font-bold"
+                >
+                  👥 formulaires
+                </Link>
+                <Link
+                  href="/utilisateurs"
                   className="hover:bg-blue-700 px-4 py-2 rounded-md transition-colors text-sm font-bold"
                 >
                   👥 Utilisateurs
                 </Link>
-                <Link 
-                  href="/candidats" 
+                <Link
+                  href="/candidats"
                   className="hover:bg-blue-700 px-4 py-2 rounded-md transition-colors text-sm font-bold"
                 >
                   👤 Candidats
@@ -48,10 +55,10 @@ export default function DashboardPage() {
               <span className="text-sm font-bold">
                 👋 {user?.firstname} {user?.lastname}
               </span>
-              <button 
+              <button
                 onClick={() => {
                   useAuthStore.getState().logout();
-                  router.push('/login');
+                  router.push("/login");
                 }}
                 className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md text-sm font-bold transition-colors"
               >
@@ -63,10 +70,8 @@ export default function DashboardPage() {
       </nav>
 
       <div className="p-4">
-      
         <h1 className="text-2xl font-bold">Dashboard Admin RH</h1>
         <p>Ici vous pouvez gérer les utilisateurs</p>
-        <h1>khadija shanoun</h1>
       </div>
     </div>
   );

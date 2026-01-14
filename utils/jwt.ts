@@ -1,6 +1,5 @@
 import { User } from "@/types/user";
 
-// Fonction pour décoder le JWT sans vérification de signature (côté client uniquement)
 export function decodeJWT(token: string): User | null {
   try {
     const payload = JSON.parse(atob(token.split('.')[1]));
@@ -18,7 +17,6 @@ export function decodeJWT(token: string): User | null {
   }
 }
 
-// Fonction pour vérifier si un token est expiré
 export function isTokenExpired(token: string): boolean {
   try {
     const payload = JSON.parse(atob(token.split('.')[1]));

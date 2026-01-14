@@ -1,9 +1,10 @@
 import { api } from "@/lib/api";
 
-export const getForm = async(data: any)=>{
-    const res = await api.get('/forms' , data);
-    return res.data
-}
+export const getForm = async () => {
+  const res = await api.get("/forms");
+  return res.data;
+};
+
 
 export const createForm = async(data: any)=>{
     return api.post('/forms', data);
