@@ -1,23 +1,27 @@
 import { api } from "@/lib/api";
 
-export const uploadFile = (formData: FormData) => {
-  return api.post("/files/upload", formData, {
+export const listFiles = (bucket: string) => {
+  return api.get(`/minio/list/${bucket}`);
+};
+
+export const uploadFile = (bucket: string, file: File) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("bucket", bucket);
+
+  return api.post("/minio/upload", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
   });
 };
 
-export const getFiles = () => {
-  return api.get("/files");
-};
-
-export const deleteFile = (id: string) => {
-  return api.delete(`/files/${id}`);
-};
-
-export const downloadFile = (id: string) => {
-  return api.get(`/files/${id}/download`, {
+export const downloadFile = (bucket: string, fileName: string) => {
+  return api.get(`/minio/download/${bucket}/${fileName}`, {
     responseType: "blob",
   });
+};
+
+export const deleteFile = (bucket: string, fileName: string) => {
+  return api.delete(`/minio/remove/${bucket}/${fileName}`);
 };

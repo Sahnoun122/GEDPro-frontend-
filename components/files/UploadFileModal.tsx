@@ -3,22 +3,29 @@
 import { useState } from "react";
 import { uploadFile } from "@/lib/files.api";
 
-export default function UploadFileModal({ onClose, onUploaded }: any) {
+interface UploadFileModalProps {
+  onClose: () => void;
+  onUploaded: () => void;
+  bucket?: string;
+}
+
+export default function UploadFileModal({ onClose, onUploaded, bucket = "documents" }: UploadFileModalProps) {
   const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
 
   async function handleUpload() {
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append("file", file);
-
     setLoading(true);
-    await uploadFile(formData);
-    setLoading(false);
-
-    onUploaded();
-    onClose();
+    try {
+      await uploadFile(bucket, file);
+      onUploaded();
+      onClose();
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (

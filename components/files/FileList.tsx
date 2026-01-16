@@ -1,34 +1,53 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getFiles, deleteFile, downloadFile } from "@/lib/files.api";
+import { listFiles, deleteFile, downloadFile } from "@/lib/files.api";
 import { FileItem } from "@/types/file";
 
-export default function FileList() {
+interface FileListProps {
+  bucket?: string;
+}
+
+export default function FileList({ bucket = "documents" }: FileListProps) {
   const [files, setFiles] = useState<FileItem[]>([]);
 
   useEffect(() => {
     loadFiles();
-  }, []);
+  }, [bucket]);
 
   async function loadFiles() {
-    const res = await getFiles();
-    setFiles(res.data);
+    try {
+      const res = await listFiles(bucket);
+      setFiles(res.data || []);
+    } catch (error) {
+      console.error('Error loading files:', error);
+      setFiles([]);
+    }
   }
 
-  async function handleDelete(id: string) {
-    await deleteFile(id);
-    loadFiles();
+  async function handleDelete(file: FileItem) {
+    try {
+      const fileName = file.name || file.filename || '';
+      await deleteFile(bucket, fileName);
+      loadFiles();
+    } catch (error) {
+      console.error('Error deleting file:', error);
+    }
   }
 
   async function handleDownload(file: FileItem) {
-    const res = await downloadFile(file.id);
-    const blob = new Blob([res.data]);
+    try {
+      const fileName = file.name || file.filename || '';
+      const res = await downloadFile(bucket, fileName);
+      const blob = new Blob([res.data]);
 
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = file.filename;
-    link.click();
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = fileName;
+      link.click();
+    } catch (error) {
+      console.error('Error downloading file:', error);
+    }
   }
 
   return (
@@ -41,9 +60,9 @@ export default function FileList() {
           </tr>
         </thead>
         <tbody>
-          {files.map((file) => (
-            <tr key={file.id} className="border-t">
-              <td className="p-3">{file.filename}</td>
+          {files.map((file, index) => (
+            <tr key={file.name || file.filename || index} className="border-t">
+              <td className="p-3">{file.name || file.filename}</td>
               <td className="p-3 text-center space-x-3">
                 <button
                   onClick={() => handleDownload(file)}
@@ -52,7 +71,7 @@ export default function FileList() {
                   Télécharger
                 </button>
                 <button
-                  onClick={() => handleDelete(file.id)}
+                  onClick={() => handleDelete(file)}
                   className="text-red-600 underline"
                 >
                   Supprimer

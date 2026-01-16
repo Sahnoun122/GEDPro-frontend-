@@ -37,6 +37,12 @@ export default function DashboardPage() {
                   👥 formulaires
                 </Link>
                 <Link
+                  href="/documents"
+                  className="hover:bg-blue-700 px-4 py-2 rounded-md transition-colors text-sm font-bold"
+                >
+                  documents
+                </Link>
+                <Link
                   href="/utilisateurs"
                   className="hover:bg-blue-700 px-4 py-2 rounded-md transition-colors text-sm font-bold"
                 >
